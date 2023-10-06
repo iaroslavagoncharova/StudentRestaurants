@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/app-icon.svg" />
+  <link href="main.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Example Vite PWA">
+  <link rel="apple-touch-icon" href="/icons/icon-192x192.png" sizes="192x192">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Restaurant App</title>
+  <script src="src/main.ts" type="module"></script>
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>Restaurant App</h1>
+    <button id="register">Create a profile</button>
+    <button id="login">Log in</button>
+    <button id="profile">Profile</button>
+  </div>
+  <div>
+    <dialog id="registration_dialog">
+      <h2 id="registration_title">Kirjaudu sisään</h2>
+        <form id="create-form">
+          <label for="create-username">Enter your name </label>
+          <input type="text" id="create-username" name="create-username" autocomplete="name" placeholder="Nice to meet you!" required>
+          <label for="create-password">Enter your password</label>
+          <input type="password" id="create-password" name="create-password" placeholder="Shhh, we won't tell anyone" required pattern="^(?=.*[A-Z])(?=.*\d).*$">
+          <label for="create-email">Enter your email</label>
+          <input type="email" id="create-email" name="create-email" placeholder="Promise: no advertisements!" required>
+          <input type="submit" value="Create a profile" class="button">
+        </form>
+        <button id="close_registration">Close</button>
+    </dialog>
+    <div>
+      <dialog id="login_dialog">
+        <h2>Log in into your account</h2>
+          <form id="login-form" onsubmit="loginBtn.disabled">
+            <label for="username">Enter your name</label>
+            <input type="text" id="username" name="username" autocomplete="name" placeholder="Welcome back!" required>
+            <label for="password">Enter your password</label>
+            <input type="password" id="password" name="password" placeholder="Hopefully you didn't forget it!" required pattern="^(?=.*[A-Z])(?=.*\d).*$">
+            <input type="submit" value="Login" class="button" id="loginBtn">
+          </form>
+          <button id="close_login">Close</button>
+      </dialog>
+      <div>
+        <dialog id="profile_dialog">
+          <h2 id="profile_title" class="h2">Profile</h2>
+          <p>Username: <span id="username-target"></span></p>
+          <p>E-mail: <span id="email-target"></span></p>
+          <img id="avatar-target" src="" alt="Avatar">
+          <h2>Upload avatar</h2>
+          <form id="avatar-form">
+              <label for="avatar">Choose image</label>
+              <input id="avatar" type="file" name="avatar">
+              <input type="submit" value="Upload avatar" class="button">
+          </form>
+        <h2>Edit profile</h2>
+            <form id="profile-form">
+              <label for="profile-username">Enter your name</label>
+              <input type="text" id="profile-username" name="username" autocomplete="name" placeholder="Example" required>
+              <label for="profile-email">Enter your new email</label>
+              <input id="profile-email" type="email" name="email" autocomplete="email" placeholder="example@gmail.com" required>
+              <input type="submit" value="Update profile" class="button">
+            </form>
+            <button id="close_profile">Close</button>
+        </dialog>
+</body>
+</html>
