@@ -1,10 +1,10 @@
-import { registerSW } from 'virtual:pwa-register';
-import { pwaInfo } from 'virtual:pwa-info';
+import {pwaInfo} from 'virtual:pwa-info';
 import {fetchData} from './functions';
+import {UpdateResult} from './interfaces/UpdateResult';
 import {UploadResult} from './interfaces/UploadResult';
-import {CreateUser, LoginUser, UpdateUser, User} from './interfaces/User';
+import {LoginUser, User, CreateUser, UpdateUser} from './interfaces/User';
 import {apiUrl, uploadUrl} from './variables';
-import { UpdateResult } from './interfaces/UpdateResult';
+import {registerSW} from 'virtual:pwa-register';
 
 
 
@@ -34,7 +34,7 @@ const registrationForm = document.querySelector('#create-form');
 
 
 // select inputs from the DOM
-const usernameInput = document.querySelector('#username') as HTMLInputElement | null;
+const usernameInput = document.querySelector('#username')as HTMLInputElement | null;
 const passwordInput = document.querySelector('#password') as HTMLInputElement | null;
 
 const profileUsernameInput = document.querySelector(
@@ -108,7 +108,6 @@ registrationForm?.addEventListener('submit', async (evt) => {
 const registrationResponse = await create(registrationData);
   alert(registrationResponse.message)
 })
-
 // function to upload avatar
 const uploadAvatar = async (
   image: File,
@@ -233,7 +232,7 @@ profileForm?.addEventListener('submit', async (evt) => {
 avatarForm?.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   if (!avatarInput?.files) {
-    return
+    return;
  }
   const image = avatarInput.files[0];
   const token = localStorage.getItem('token');
