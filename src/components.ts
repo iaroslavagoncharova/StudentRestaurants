@@ -1,5 +1,5 @@
-import {Menu} from './interfaces/Menu';
-import {Restaurant} from './interfaces/Restaurant';
+import {Menu} from '../src/interfaces/Menu';
+import {Restaurant} from '../src/interfaces/Restaurant';
 
 const restaurantRow = (restaurant: Restaurant) => {
   const {name, address, company} = restaurant;

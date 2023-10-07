@@ -12,41 +12,45 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Restaurant App</title>
   <script src="src/main.ts" type="module"></script>
+  <script src="https://kit.fontawesome.com/438aeadf51.js" crossorigin="anonymous"></script>
 
 </head>
 
 <body>
-  <div class="container">
-    <h1>Restaurant App</h1>
-    /*<button id="register">Create a profile</button>
-    <button id="login">Log in</button>
-    <button id="profile">Profile</button>
-  </div>
+  <nav class="nav">
+    <ul>
+    <li><i class="fa-solid fa-utensils fa-2xl" style="color: #ffffff;" id="logo"></i></li>
+    <li><h1>Restaurant App</h1></li>
+    <li><i class="fa-solid fa-user-plus fa-2xl" style="color: #ffffff;" id="register"></i></li>
+    <li><i class="fa-solid fa-right-to-bracket fa-2xl" style="color: #ffffff;" id="login"></i></li>
+    <li><i class="fa-solid fa-user fa-2xl" style="color: #ffffff;" id="profile"></i></li>
+  </ul>
+</nav>
   <div>
     <dialog id="registration_dialog">
-      <h2 id="registration_title">Kirjaudu sisään</h2>
+      <h2 id="registration_title">Sign up</h2>
         <form id="create-form">
-          <label for="create-username">Enter your name </label>
+          <label for="create-username">Enter your name: </label>
           <input type="text" id="create-username" name="create-username" autocomplete="name" placeholder="Nice to meet you!" required>
-          <label for="create-password">Enter your password</label>
+          <label for="create-password">Enter your password: </label>
           <input type="password" id="create-password" name="create-password" placeholder="Shhh, we won't tell anyone" required pattern="^(?=.*[A-Z])(?=.*\d).*$">
-          <label for="create-email">Enter your email</label>
+          <label for="create-email">Enter your email: </label>
           <input type="email" id="create-email" name="create-email" placeholder="Promise: no advertisements!" required>
-          <input type="submit" value="Create a profile" class="button">
+          <button id="close_registration" class="form_button">Close</button>
+          <input type="submit" value="Create a profile" class="submit_button">
         </form>
-        <button id="close_registration">Close</button>
     </dialog>
     <div>
       <dialog id="login_dialog">
         <h2>Log in into your account</h2>
           <form id="login-form" onsubmit="loginBtn.disabled">
-            <label for="username">Enter your name</label>
+            <label for="username">Enter your name: </label>
             <input type="text" id="username" name="username" autocomplete="name" placeholder="Welcome back!" required>
-            <label for="password">Enter your password</label>
+            <label for="password">Enter your password: </label>
             <input type="password" id="password" name="password" placeholder="Hopefully you didn't forget it!" required pattern="^(?=.*[A-Z])(?=.*\d).*$">
-            <input type="submit" value="Login" class="button" id="loginBtn">
+            <button id="close_login" class="form_button">Close</button>
+            <input type="submit" value="Login" class="submit_button" id="loginBtn">
           </form>
-          <button id="close_login">Close</button>
       </dialog>
       <div>
         <dialog id="profile_dialog">
@@ -58,7 +62,7 @@
           <form id="avatar-form">
               <label for="avatar">Choose image</label>
               <input id="avatar" type="file" name="avatar">
-              <input type="submit" value="Upload avatar" class="button">
+              <input type="submit" value="Upload avatar" class="submit_button">
           </form>
         <h2>Edit profile</h2>
             <form id="profile-form">
@@ -66,18 +70,19 @@
               <input type="text" id="profile-username" name="username" autocomplete="name" placeholder="Example" required>
               <label for="profile-email">Enter your new email</label>
               <input id="profile-email" type="email" name="email" autocomplete="email" placeholder="example@gmail.com" required>
-              <input type="submit" value="Update profile" class="button">
+              <button id="close_profile" class="form_button">Close</button>
+              <input type="submit" value="Update profile" class="submit_button">
             </form>
-            <button id="close_profile">Close</button>
         </dialog>
-        <h1>Restaurants</h1>
-  <h2>Filter restaurants</h2>
-  <div id="napit">
+  <div class="content">
+  <div class="filter">
+    <h2>Reset filters</h2>
+    <button id="reset">Show all</button>
+    <h2>Filter by company</h2>
     <button id="sodexo">Sodexo</button>
     <button id="compass">Compass Group</button>
-    <button id="reset">Show all</button>
-  </div>
-  <div id="cities">
+    <h2>Filter by city</h2>
+    <div id="cities">
     <button id="Helsinki">Helsinki</button>
     <button id="Hämeenlinna">Hämeenlinna</button>
     <button id="Tampere">Tampere</button>
@@ -101,7 +106,9 @@
     <button id="Kemi">Kemi</button>
     <button id="Hyvinkää">Hyvinkää</button>
   </div>
-  <table id="restaurantList">
+  </div>
+  <div class="restaurantList">
+  <table>
     <tr>
       <th>Name</th>
       <th>Address</th>
@@ -112,5 +119,7 @@
   <dialog id="info">
     <!-- add restaurant info here when restaurant is clicked -->
   </dialog>
+</div>
+</div>
 </body>
 </html>

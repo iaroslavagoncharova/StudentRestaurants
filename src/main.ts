@@ -341,7 +341,7 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
 
           // fetch menu
           const menu = await fetchData<Menu>(
-            apiUrl + `/restaurants/daily/${restaurant._id}/fi`
+            apiUrl + `/restaurants/daily/${restaurant._id}/en`
           );
           console.log(menu);
 
@@ -408,20 +408,6 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
       resetBtn.addEventListener('click', () => {
         createTable(restaurants);
       });
-
-  /*const joensuuBtn = document.querySelector('#joensuu');
-
-  if (!joensuuBtn) {
-    throw new Error ('City not found')
-  }
-  joensuuBtn.addEventListener('click', () => {
-    const joensuuRestaurants = restaurants.filter(
-      (restaurant) => restaurant.city === 'Joensuu'
-    );
-    console.log(joensuuRestaurants);
-    createTable(joensuuRestaurants);
-  });
-  */
 
   const cityButtons = document.querySelectorAll('#cities button');
 
