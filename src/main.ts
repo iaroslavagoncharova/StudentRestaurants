@@ -291,6 +291,10 @@ const profileDialog = document.getElementById("profile_dialog") as HTMLDialogEle
 const openprofileBtn = document.getElementById("profile") as HTMLButtonElement;
 const closeprofileBtn = document.getElementById("close_profile") as HTMLButtonElement;
 
+const showDayMenuButton = document.getElementById('showDayMenu');
+const showWeekMenuButton = document.getElementById('showWeekMenu');
+const dayMenuSection = document.getElementById('dayMenu');
+const weekMenuSection = document.getElementById('weekMenu');
 
 const openProfile = (e:any) => {
  e.preventDefault();
@@ -339,7 +343,7 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
           // add restaurant data to modal
           modal.innerHTML = '';
 
-          // fetch menu
+          /* fetch menu
           const menu = await fetchData<Menu>(
             apiUrl + `/restaurants/daily/${restaurant._id}/en`
           );
@@ -347,8 +351,29 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
 
           const menuHtml = restaurantModal(restaurant, menu);
           modal.insertAdjacentHTML('beforeend', menuHtml);
-
+*/
+          const dayMenu = await fetchData<Menu>(apiUrl + `/restaurants/daily/${restaurant._id}/en`);
+          console.log(dayMenu)
+          let dayMenuHtml = restaurantModal(restaurant, dayMenu);
+          modal.insertAdjacentHTML('beforeend', dayMenuHtml)
           modal.showModal();
+
+          showDayMenuButton?.addEventListener('click', () => {
+            modal.innerHTML = '';
+            dayMenuHtml = restaurantModal(restaurant, dayMenu);
+            modal.insertAdjacentHTML('beforeend', dayMenuHtml)
+          })
+
+          showWeekMenuButton?.addEventListener('click', () => {
+            modal.innerHTML = '';
+            const weekMenuHtml = restaurantModal(restaurant, weekMenu);
+            modal.insertAdjacentHTML('beforeend', weekMenuHtml)
+          })
+
+          const weekMenu = await fetchData<Menu>(apiUrl + `/restaurants/weekly/${restaurant._id}/en`);
+          console.log(weekMenu)
+
+
         } catch (error) {
           modal.innerHTML = errorModal((error as Error).message);
           modal.showModal();

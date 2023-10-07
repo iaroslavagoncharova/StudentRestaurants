@@ -82,6 +82,7 @@ input {
   font-size: 20px;
   margin: 5px;
   border-radius: 15px;
+  cursor: pointer;
 }
 table {
   border-collapse: collapse;
@@ -176,6 +177,9 @@ i {
   font-size: 50px;
 }
 
+#showDayMenu {
+  background-color: aqua;
+}
 
 
 
