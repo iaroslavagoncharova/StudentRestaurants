@@ -5,9 +5,9 @@ import {UploadResult} from './interfaces/UploadResult';
 import {LoginUser, User, CreateUser, UpdateUser} from './interfaces/User';
 import {apiUrl, uploadUrl, restaurantUrl, positionOptions} from './variables';
 import {registerSW} from 'virtual:pwa-register';
-import { errorModal, restaurantModal, restaurantRow } from './components';
+import { errorModal, weekModal, restaurantRow, dayModal, restaurantModal } from './components';
 import { Restaurant } from './interfaces/Restaurant';
-import { Menu } from './interfaces/Menu';
+import { Menu, weeklyMenu } from './interfaces/Menu';
 
 // PWA code
 console.log(pwaInfo)
@@ -291,11 +291,6 @@ const profileDialog = document.getElementById("profile_dialog") as HTMLDialogEle
 const openprofileBtn = document.getElementById("profile") as HTMLButtonElement;
 const closeprofileBtn = document.getElementById("close_profile") as HTMLButtonElement;
 
-const showDayMenuButton = document.getElementById('showDayMenu');
-const showWeekMenuButton = document.getElementById('showWeekMenu');
-const dayMenuSection = document.getElementById('dayMenu');
-const weekMenuSection = document.getElementById('weekMenu');
-
 const openProfile = (e:any) => {
  e.preventDefault();
   profileDialog.showModal();
@@ -315,9 +310,9 @@ const modal = document.getElementById('info') as HTMLDialogElement;
 if (!modal) {
   throw new Error('Modal not found');
 }
-modal.addEventListener('click', () => {
-  modal.close();
-});
+
+const dayInfo = document.getElementById('day_info') as HTMLDialogElement;
+const weekInfo = document.getElementById('week_info') as HTMLDialogElement;
 
 const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
   Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
@@ -353,25 +348,37 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
           modal.insertAdjacentHTML('beforeend', menuHtml);
 */
           const dayMenu = await fetchData<Menu>(apiUrl + `/restaurants/daily/${restaurant._id}/en`);
-          console.log(dayMenu)
-          let dayMenuHtml = restaurantModal(restaurant, dayMenu);
-          modal.insertAdjacentHTML('beforeend', dayMenuHtml)
-          modal.showModal();
+          const weekMenu = await fetchData<weeklyMenu>(apiUrl + `/restaurants/weekly/${restaurant._id}/en`);
 
-          showDayMenuButton?.addEventListener('click', () => {
-            modal.innerHTML = '';
-            dayMenuHtml = restaurantModal(restaurant, dayMenu);
+          const info = await fetchData<Restaurant>(apiUrl + `/restaurants/${restaurant._id}`)
+          const infoModal = restaurantModal(info);
+          modal.insertAdjacentHTML('beforeend', infoModal);
+          modal.showModal()
+
+          const weekTable = document.getElementById('week');
+
+          const closeIcon = document.getElementById('close');
+          closeIcon?.addEventListener ('click', () => {
+              modal.close()
+            })
+          const day_btn = document.getElementById('dayInfo');
+          day_btn?.addEventListener('click', () => {
+            const dayMenuHtml = dayModal(dayMenu);
             modal.insertAdjacentHTML('beforeend', dayMenuHtml)
           })
 
-          showWeekMenuButton?.addEventListener('click', () => {
-            modal.innerHTML = '';
-            const weekMenuHtml = restaurantModal(restaurant, weekMenu);
-            modal.insertAdjacentHTML('beforeend', weekMenuHtml)
+          const week_btn = document.getElementById('weekInfo');
+          week_btn?.addEventListener('click', () => {
+            const weekMenuHtml = weekModal(weekMenu);
+            modal.insertAdjacentHTML('beforeend', weekMenuHtml);
           })
+          //let dayMenuHtml = restaurantModal(restaurant, dayMenu);
 
-          const weekMenu = await fetchData<Menu>(apiUrl + `/restaurants/weekly/${restaurant._id}/en`);
-          console.log(weekMenu)
+          /*showDayMenuButton?.addEventListener('click', () => {
+            modal.innerHTML = '';
+            dayMenuHtml = restaurantModal(restaurant, dayMenu);
+            modal.insertAdjacentHTML('beforeend', dayMenuHtml)
+          })*/
 
 
         } catch (error) {

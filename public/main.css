@@ -90,6 +90,7 @@ table {
   margin: 0;
   padding: 0;
   cursor: pointer;
+  min-width: 700px;
 }
 
 th {
@@ -97,14 +98,32 @@ th {
   border-bottom: 1px solid #ccc;
   font-weight: normal;
   padding: 0.5em 1em;
-  text-align: left;
+  text-align: center;
 }
 
 td {
   border-bottom: 1px solid #ccc;
   padding: 0.5em 1em;
+  overflow: hidden;
+  text-align: center;
+  }
+
+tr {
+  width: 900px;
 }
 
+#menu_name, #course_label {
+  width: 300px;
+  padding: 10px;
+}
+
+#diet_info, #diet_label {
+  min-width: 100px;
+}
+
+#price, #price_label {
+  width: 200px;
+}
 .highlight {
   font-weight: bold;
   background-color: #E7CBCB;
@@ -177,10 +196,19 @@ i {
   font-size: 50px;
 }
 
-#showDayMenu {
-  background-color: aqua;
+h2, h3 {
+  text-align: center;
 }
 
+#weekInfo, #dayInfo {
+  background-color: #643843;
+  color: #fffbff;
+  padding: 10px;
+  font-size: 20px;
+  margin: 5px;
+  border-radius: 15px;
+  cursor: pointer;
+}
 
 
 

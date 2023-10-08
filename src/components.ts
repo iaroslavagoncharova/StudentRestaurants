@@ -1,4 +1,4 @@
-import {Menu} from '../src/interfaces/Menu';
+import {weeklyMenu, Menu} from '../src/interfaces/Menu';
 import {Restaurant} from '../src/interfaces/Restaurant';
 
 const restaurantRow = (restaurant: Restaurant) => {
@@ -16,22 +16,44 @@ const restaurantRow = (restaurant: Restaurant) => {
   return tr;
 };
 
-const restaurantModal = (restaurant: Restaurant, menu: Menu) => {
-  const {name, address, city, postalCode, phone, company} = restaurant;
-  let html = `<h3>${name}</h3>
-    <p>${company}</p>
-    <p>${address} ${postalCode} ${city}</p>
-    <p>${phone}</p>
-    <table>
+const weekModal = (weeklymenu: weeklyMenu) => {
+  let html = `<h2>Week menu</h2>`;
+      weeklymenu.days.forEach((menu) => {
+      const {date} = menu;
+      html += `<div>
+      <table>
+      <h3>${date}</h3>
+      <tr>
+          <th id="course_label">Course</th>
+          <th id="diet_label">Diet</th>
+          <th id="price_label">Price</th>`;
+      menu.courses.forEach((course) => {
+        const {name, diets, price} = course;
+        html += ` <table>
+        </tr>
+              <tr>
+                <td id="menu_name">${name}</td>
+                <td id="diet_info">${diets ?? ' - '}</td>
+                <td id="price">${price ?? ' - '}</td>
+              </tr>
+              `;})
+        })
+        html += `</table></div>`
+        return html;
+  };
+
+
+const dayModal = (menu: Menu) => {
+  let html = `<h2>Day Menu</h2>
+  <table>
       <tr>
         <th>Course</th>
         <th>Diet</th>
         <th>Price</th>
-      </tr>
-    `;
+      </tr>`
   menu.courses.forEach((course) => {
     const {name, diets, price} = course;
-    html += `
+   html += `
           <tr>
             <td>${name}</td>
             <td>${diets ?? ' - '}</td>
@@ -39,10 +61,23 @@ const restaurantModal = (restaurant: Restaurant, menu: Menu) => {
           </tr>
           `;
   });
-  html += '</table>';
+  html += '</table></div>';
   return html;
 };
 
+const restaurantModal = (restaurant: Restaurant) => {
+  const {name, address, city, postalCode, phone, company} = restaurant;
+  let html = `
+  <h3>${name}</h3>
+    <p>${company}</p>
+    <p>${address} ${postalCode} ${city}</p>
+    <p>${phone}</p>
+    `;
+    html += `<button id="weekInfo">Open week menu</button>
+  <button id="dayInfo">Open day menu</button>
+  <i class="fa-regular fa-circle-xmark" style="color: #ffffff;" id="close"></i>`
+    return html
+}
 const errorModal = (message: string) => {
   const html = `
         <h3>Error</h3>
@@ -51,4 +86,4 @@ const errorModal = (message: string) => {
   return html;
 };
 
-export {restaurantRow, restaurantModal, errorModal};
+export {restaurantRow, weekModal, errorModal, dayModal, restaurantModal};
