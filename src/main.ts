@@ -355,32 +355,45 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
           modal.insertAdjacentHTML('beforeend', infoModal);
           modal.showModal()
 
-          const weekTable = document.getElementById('week');
-
           const closeIcon = document.getElementById('close');
           closeIcon?.addEventListener ('click', () => {
               modal.close()
             })
+
           const day_btn = document.getElementById('dayInfo');
+          const week_btn = document.getElementById('weekInfo');
+          const day_menu = document.getElementById('day_menu') as HTMLDialogElement;
+          const week_menu = document.getElementById('week_menu') as HTMLDialogElement;
+
           day_btn?.addEventListener('click', () => {
             const dayMenuHtml = dayModal(dayMenu);
-            modal.insertAdjacentHTML('beforeend', dayMenuHtml)
+            day_menu.innerHTML = dayMenuHtml;
+            day_menu.showModal()
+            modal.close()
           })
 
-          const week_btn = document.getElementById('weekInfo');
           week_btn?.addEventListener('click', () => {
             const weekMenuHtml = weekModal(weekMenu);
-            modal.insertAdjacentHTML('beforeend', weekMenuHtml);
+            week_menu.innerHTML = weekMenuHtml;
+            week_menu.showModal();
+            modal.close()
           })
-          //let dayMenuHtml = restaurantModal(restaurant, dayMenu);
 
-          /*showDayMenuButton?.addEventListener('click', () => {
-            modal.innerHTML = '';
-            dayMenuHtml = restaurantModal(restaurant, dayMenu);
-            modal.insertAdjacentHTML('beforeend', dayMenuHtml)
-          })*/
+          const back_btn = document.getElementById('back');
+          back_btn?.addEventListener('click', () => {
+            day_menu.close();
+            modal.showModal()
+          })
 
+          day_menu.addEventListener('click', () => {
+            day_menu.close();
+            modal.showModal()
+          })
 
+          week_menu.addEventListener('click', () => {
+            week_menu.close();
+            modal.showModal();
+          })
         } catch (error) {
           modal.innerHTML = errorModal((error as Error).message);
           modal.showModal();
@@ -461,4 +474,9 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
   };
 
   navigator.geolocation.getCurrentPosition(success, error, positionOptions);
+
+  const checkbox = document.getElementById("checkbox") as HTMLElement;
+  checkbox.addEventListener("change", () => {
+  document.body.classList.toggle("dark")
+})
 

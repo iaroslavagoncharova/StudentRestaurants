@@ -1,24 +1,99 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Nunito+Sans:opsz@6..12&display=swap');
 
-html {
-  background-image: url("pexels-chris-economou-6367377.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
+
 * {
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
   font-family: 'Nunito Sans', sans-serif;
+
 }
 body {
   margin: 0;
   position: relative;
+  transition: background 0.9s ease-in;
+  background-image: url("pexels-chris-economou-6367377.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+}
+
+body.dark {
+  background-image: url("Vuosaari_at_night\,_Helsinki\,_Finland\,_2021_January.jpg");}
+
+.checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+.nav_content {
+  height: 200px;
+  top: 0;
+  margin: 0;
+}
+
+
+.checkbox-label {
+  background-color: #99627A;
+  width: 67px;
+  height: 32px;
+  border-radius: 50px;
+  position: relative;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.toggle {
+  margin: 0;
+}
+#sun {color: #fffbff;}
+
+#moon {color: #04030f;}
+
+body.dark #sun{
+  color:#04030f
+}
+
+body.dark #moon {
+  color:#fffbff
+}
+
+.checkbox-label .ball {
+  background-color: #fff;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  left: 2px;
+  border-radius: 50%;
+  transition: transform 0.2s linear;
+}
+
+.checkbox:checked + .checkbox-label .ball {
+  transform: translateX(34px);
 }
 
 body:has(dialog[open]) {
   overflow-y: hidden;
 }
 
+body.dark .filter {
+  background-color: #643843;
+  color: #f0f0f0;
+}
+
+body.dark .filter h2 {
+  color:#f0f0f0
+}
+
+body.dark .filter button {
+  background-color: #E7CBCB;
+  color: #643843;
+}
+body.dark .restaurantList {
+  background-color: #99627A;
+  color: #fffbff;
+}
 dialog {
   background-color: #E7CBCB;
   min-width: 600px;
@@ -169,21 +244,27 @@ tr {
   width: 100%;
   background-color: #643843;
   box-shadow: 2px 2px 15px #04030f;
-  margin: 0;
-  padding: 5px;
 }
 
 .nav ul {
   list-style-type: none;
   margin: auto;
   color: #fffbff;
+  padding-left: 0;
 }
-
 .nav li {
   width: 20%;
   text-align: center;
-  padding: 20px 0;
   float: left;
+  margin-bottom: 20px;
+  transform: translateY(-20%);
+}
+
+
+#toggle {
+  transform: translateY(50%);
+  margin: 10px;
+  margin-top: 30px;
 }
 
 i {
@@ -205,9 +286,20 @@ h2, h3 {
   color: #fffbff;
   padding: 10px;
   font-size: 20px;
-  margin: 5px;
+  margin: 10px 10px;
   border-radius: 15px;
   cursor: pointer;
+  width: 45%;
+  display: inline;
+  text-align: center;
+}
+
+dialog p {
+  text-align: center;
+}
+
+#close {
+  margin: 20px auto;
 }
 
 

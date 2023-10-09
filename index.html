@@ -17,7 +17,16 @@
 </head>
 
 <body>
+  <div class="nav_content">
   <nav class="nav">
+    <div id="toggle">
+      <input type="checkbox" class="checkbox" id="checkbox">
+      <label for="checkbox" class="checkbox-label">
+        <i class="fa-solid fa-moon fa-xl" id="moon"></i>
+        <i class="fa-solid fa-sun fa-xl" id="sun"></i>
+        <span class="ball"></span>
+      </label>
+    </div>
     <ul>
     <li><i class="fa-solid fa-utensils fa-2xl" style="color: #ffffff;" id="logo"></i></li>
     <li><h1>Restaurant App</h1></li>
@@ -26,6 +35,7 @@
     <li><i class="fa-solid fa-user fa-2xl" style="color: #ffffff;" id="profile"></i></li>
   </ul>
 </nav>
+</div>
   <div>
     <dialog id="registration_dialog">
       <h2 id="registration_title">Sign up</h2>
@@ -117,10 +127,10 @@
   </table>
   <!-- modal -->
   <dialog id="info">
-    <div id="week"></div>
     <!-- add restaurant info here when restaurant is clicked -->
   </dialog>
-</div>
+  <dialog id="day_menu"></dialog>
+  <dialog id="week_menu"></dialog>
 </div>
 </body>
 </html>

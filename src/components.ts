@@ -17,7 +17,8 @@ const restaurantRow = (restaurant: Restaurant) => {
 };
 
 const weekModal = (weeklymenu: weeklyMenu) => {
-  let html = `<h2>Week menu</h2>`;
+  let html = `
+  <h2>Week menu</h2> <p>Click anywhere to go back</p>`;
       weeklymenu.days.forEach((menu) => {
       const {date} = menu;
       html += `<div>
@@ -44,7 +45,8 @@ const weekModal = (weeklymenu: weeklyMenu) => {
 
 
 const dayModal = (menu: Menu) => {
-  let html = `<h2>Day Menu</h2>
+  let html =`
+  <h2>Day Menu</h2> <p>Click anywhere to go back</p>
   <table>
       <tr>
         <th>Course</th>
@@ -68,14 +70,14 @@ const dayModal = (menu: Menu) => {
 const restaurantModal = (restaurant: Restaurant) => {
   const {name, address, city, postalCode, phone, company} = restaurant;
   let html = `
+  <i class="fa-solid fa-circle-xmark fa-2xl" style="color: #643843;" id="close"></i>
   <h3>${name}</h3>
     <p>${company}</p>
     <p>${address} ${postalCode} ${city}</p>
     <p>${phone}</p>
     `;
     html += `<button id="weekInfo">Open week menu</button>
-  <button id="dayInfo">Open day menu</button>
-  <i class="fa-regular fa-circle-xmark" style="color: #ffffff;" id="close"></i>`
+  <button id="dayInfo">Open day menu</button>`
     return html
 }
 const errorModal = (message: string) => {
