@@ -70,7 +70,7 @@ const dayModal = (menu: Menu) => {
 const restaurantModal = (restaurant: Restaurant) => {
   const {name, address, city, postalCode, phone, company} = restaurant;
   let html = `
-  <i class="fa-solid fa-circle-xmark fa-2xl" style="color: #643843;" id="close"></i>
+  <i class="fa-solid fa-circle-xmark fa-2xl" id="close"></i>
   <h3>${name}</h3>
     <p>${company}</p>
     <p>${address} ${postalCode} ${city}</p>

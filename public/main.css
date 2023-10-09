@@ -25,13 +25,6 @@ body.dark {
   position: absolute;
 }
 
-.nav_content {
-  height: 200px;
-  top: 0;
-  margin: 0;
-}
-
-
 .checkbox-label {
   background-color: #99627A;
   width: 67px;
@@ -140,6 +133,12 @@ input {
   color: #fffbff;
 }
 
+body.dark .form_button, .submit_button {
+  background-color: #E7CBCB;
+  color: #643843;
+}
+
+
 .submit_button {
   background-color: firebrick;
   color: #fffbff;
@@ -176,6 +175,11 @@ th {
   text-align: center;
 }
 
+body.dark th {
+  background-color: #99627A;
+  color: #fffbff;
+}
+
 td {
   border-bottom: 1px solid #ccc;
   padding: 0.5em 1em;
@@ -202,6 +206,15 @@ tr {
 .highlight {
   font-weight: bold;
   background-color: #E7CBCB;
+}
+
+body.dark .highlight {
+  background-color: #643843;
+  color: #fffbff;
+}
+body.dark dialog {
+  background-color: #643843;
+  color: #fffbff;
 }
 
 .restaurantList {
@@ -244,6 +257,7 @@ tr {
   width: 100%;
   background-color: #643843;
   box-shadow: 2px 2px 15px #04030f;
+  padding: 10px;
 }
 
 .nav ul {
@@ -260,12 +274,6 @@ tr {
   transform: translateY(-20%);
 }
 
-
-#toggle {
-  transform: translateY(50%);
-  margin: 10px;
-  margin-top: 30px;
-}
 
 i {
   cursor: pointer;
@@ -294,14 +302,32 @@ h2, h3 {
   text-align: center;
 }
 
+dialog::backdrop {
+  backdrop-filter: blur(4px);
+  transition: 0.8s ease;
+  }
+
+body.dark #weekInfo {
+  background-color: #E7CBCB;
+  color: #643843;
+}
+body.dark #dayInfo {
+  background-color: #E7CBCB;
+  color: #643843;
+}
+
 dialog p {
   text-align: center;
 }
 
 #close {
   margin: 20px auto;
+  color: #643843;
 }
 
+body.dark #close {
+  color: #E7CBCB;
+}
 
 
 
