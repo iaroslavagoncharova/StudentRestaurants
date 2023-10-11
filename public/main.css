@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Nunito+Sans:opsz@6..12&display=swap');
 
+/*general rules*/
 
 * {
   box-sizing: border-box;
@@ -7,6 +8,7 @@
   font-family: 'Nunito Sans', sans-serif;
 
 }
+
 body {
   margin: 0;
   position: relative;
@@ -18,88 +20,94 @@ body {
   height: 100vh;
 }
 
-body.dark {
-  background-image: url("dark_background.jpg");}
-
-.checkbox {
-  opacity: 0;
-  position: absolute;
-}
-
-.checkbox-label {
-  background-color: #99627A;
-  width: 67px;
-  height: 32px;
-  border-radius: 50px;
-  position: relative;
-  padding: 5px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.toggle {
-  margin: 0;
-}
-#sun {color: #fffbff;}
-
-#moon {color: #04030f;}
-
-body.dark #sun{
-  color:#04030f
-}
-
-body.dark #moon {
-  color:#fffbff
-}
-
-.checkbox-label .ball {
-  background-color: #fff;
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  left: 2px;
-  border-radius: 50%;
-  transition: transform 0.2s linear;
-}
-
-.checkbox:checked + .checkbox-label .ball {
-  transform: translateX(34px);
-}
-
 body:has(dialog[open]) {
   overflow-y: hidden;
 }
 
-body.dark .filter {
+/*navigation bar*/
+
+.nav {
+  position: absolute;
+  width: 100%;
   background-color: #643843;
-  color: #f0f0f0;
+  box-shadow: 2px 2px 15px #04030f;
+  padding: 10px;
 }
 
-body.dark .filter h2 {
-  color:#f0f0f0
+.nav ul {
+  list-style-type: none;
+  margin: auto;
+  color: #fffbff;
+  padding-left: 0;
+}
+.nav li {
+  width: 20%;
+  text-align: center;
+  float: left;
+  margin-bottom: 20px;
+  transform: translateY(-20%);
 }
 
-body.dark .filter button {
+i {
+  cursor: pointer;
+  margin: 30px auto;
+}
+
+#logo {
+  cursor: default;
+  font-size: 50px;
+}
+
+/*content rules*/
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.content {
+  position: absolute;
+  display: grid;
+  grid-template-columns: 600px auto;
+  grid-template-rows: 700px auto;
+  margin: 10px;
+  padding: 10px;
+  grid-gap: 20px;
+  top: 150px;
+  text-align: left;
+}
+
+.filter {
   background-color: #E7CBCB;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 20px;
+  grid-row: 1 / 2;
+}
+
+.filter h2 {
   color: #643843;
 }
-body.dark .restaurantList {
-  background-color: #99627A;
+
+.filter button {
+  background-color: #643843;
   color: #fffbff;
+  padding: 10px;
+  font-size: 20px;
+  margin: 5px;
+  border-radius: 15px;
+  cursor: pointer;
 }
+
+/*dialogs*/
+
 dialog {
   background-color: #E7CBCB;
   min-width: 600px;
   border: 2px solid #643843;
   font-size: 20px;
   border-radius: 20px;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
 }
 
 form {
@@ -119,7 +127,6 @@ form input {
   text-align: left;
 }
 
-
 .form_button, .submit_button {
   width: 45%;
   padding: 10px;
@@ -134,12 +141,6 @@ form input {
   color: #fffbff;
 }
 
-body.dark .form_button, .submit_button {
-  background-color: #E7CBCB;
-  color: #643843;
-}
-
-
 .submit_button {
   background-color: firebrick;
   color: #fffbff;
@@ -150,15 +151,26 @@ body.dark .form_button, .submit_button {
   height: auto;
 }
 
-.filter button {
-  background-color: #643843;
-  color: #fffbff;
-  padding: 10px;
-  font-size: 20px;
-  margin: 5px;
-  border-radius: 15px;
-  cursor: pointer;
+dialog::backdrop {
+  backdrop-filter: blur(4px);
+  transition: 0.8s ease;
+  }
+
+dialog p {
+  text-align: center;
 }
+
+#close {
+  margin: 20px auto;
+  color: #643843;
+}
+
+h2, h3 {
+  text-align: center;
+}
+
+/*restaurant table*/
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -174,11 +186,6 @@ th {
   font-weight: normal;
   padding: 0.5em 1em;
   text-align: center;
-}
-
-body.dark th {
-  background-color: #99627A;
-  color: #fffbff;
 }
 
 td {
@@ -204,18 +211,10 @@ tr {
 #price, #price_label {
   width: 200px;
 }
+
 .highlight {
   font-weight: bold;
   background-color: #E7CBCB;
-}
-
-body.dark .highlight {
-  background-color: #643843;
-  color: #fffbff;
-}
-body.dark dialog {
-  background-color: #643843;
-  color: #fffbff;
 }
 
 .restaurantList {
@@ -228,66 +227,6 @@ body.dark dialog {
   height: 750px;
   overflow: auto;
   text-align: left;
-}
-
-.content {
-  position: absolute;
-  display: grid;
-  grid-template-columns: 600px auto;
-  grid-template-rows: 700px auto;
-  margin: 10px;
-  padding: 10px;
-  grid-gap: 20px;
-  top: 150px;
-  text-align: left;
-}
-.filter {
-  background-color: #E7CBCB;
-  margin: 10px;
-  padding: 20px;
-  border-radius: 20px;
-  grid-row: 1 / 2;
-}
-
-.filter h2 {
-  color: #643843;
-}
-
-.nav {
-  position: absolute;
-  width: 100%;
-  background-color: #643843;
-  box-shadow: 2px 2px 15px #04030f;
-  padding: 10px;
-}
-
-.nav ul {
-  list-style-type: none;
-  margin: auto;
-  color: #fffbff;
-  padding-left: 0;
-}
-.nav li {
-  width: 20%;
-  text-align: center;
-  float: left;
-  margin-bottom: 20px;
-  transform: translateY(-20%);
-}
-
-
-i {
-  cursor: pointer;
-  margin: 30px auto;
-}
-
-#logo {
-  cursor: default;
-  font-size: 50px;
-}
-
-h2, h3 {
-  text-align: center;
 }
 
 #weekInfo, #dayInfo {
@@ -303,10 +242,94 @@ h2, h3 {
   text-align: center;
 }
 
-dialog::backdrop {
-  backdrop-filter: blur(4px);
-  transition: 0.8s ease;
-  }
+/*dark mode toggle*/
+
+.checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+.checkbox-label {
+  background-color: #99627A;
+  width: 67px;
+  height: 32px;
+  border-radius: 50px;
+  position: relative;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#sun {color: #fffbff;}
+
+#moon {color: #04030f;}
+
+.checkbox-label .ball {
+  background-color: #fff;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  left: 2px;
+  border-radius: 50%;
+  transition: transform 0.2s linear;
+}
+
+.checkbox:checked + .checkbox-label .ball {
+  transform: translateX(34px);
+}
+
+/*dark mode rules*/
+
+body.dark {
+  background-image: url("dark_background.jpg");}
+
+
+body.dark #sun{
+  color:#04030f
+}
+
+body.dark #moon {
+  color:#fffbff
+}
+
+body.dark .filter {
+  background-color: #643843;
+  color: #f0f0f0;
+}
+
+body.dark .filter h2 {
+  color:#f0f0f0
+}
+
+body.dark .filter button {
+  background-color: #E7CBCB;
+  color: #643843;
+}
+
+body.dark .restaurantList {
+  background-color: #99627A;
+  color: #fffbff;
+}
+
+body.dark .form_button, .submit_button {
+  background-color: #E7CBCB;
+  color: #643843;
+}
+
+body.dark th {
+  background-color: #99627A;
+  color: #fffbff;
+}
+body.dark .highlight {
+  background-color: #643843;
+  color: #fffbff;
+}
+body.dark dialog {
+  background-color: #643843;
+  color: #fffbff;
+}
 
 body.dark #weekInfo {
   background-color: #E7CBCB;
@@ -317,19 +340,9 @@ body.dark #dayInfo {
   color: #643843;
 }
 
-dialog p {
-  text-align: center;
-}
-
-#close {
-  margin: 20px auto;
-  color: #643843;
-}
-
 body.dark #close {
   color: #E7CBCB;
 }
-
 
 
 
