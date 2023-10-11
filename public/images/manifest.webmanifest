@@ -1,11 +1,11 @@
 {
-    "theme_color": "#f69435",
-    "background_color": "#f69435",
+    "theme_color": "#643843",
+    "background_color": "#E7CBCB",
     "display": "standalone",
     "scope": "./",
     "start_url": "./index.html",
-    "name": "vite-pwa-example",
-    "short_name": "vite-pwa",
+    "name": "restaurant-app",
+    "short_name": "restaurant",
     "icons": [
         {
             "src": "/icon-192x192.png",

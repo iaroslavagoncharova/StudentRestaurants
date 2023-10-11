@@ -1,3 +1,5 @@
+// interface for weekly and daily menu
+
 interface weeklyMenu {
     days: Menu[]
 }

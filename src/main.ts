@@ -3,7 +3,7 @@ import {fetchData} from './functions';
 import {UpdateResult} from './interfaces/UpdateResult';
 import {UploadResult} from './interfaces/UploadResult';
 import {LoginUser, User, CreateUser, UpdateUser} from './interfaces/User';
-import {apiUrl, uploadUrl, restaurantUrl, positionOptions} from './variables';
+import {apiUrl, uploadUrl, positionOptions} from './variables';
 import {registerSW} from 'virtual:pwa-register';
 import { errorModal, weekModal, restaurantRow, dayModal, restaurantModal } from './components';
 import { Restaurant } from './interfaces/Restaurant';
@@ -41,6 +41,7 @@ const passwordInput = document.querySelector('#password') as HTMLInputElement | 
 const profileUsernameInput = document.querySelector(
   '#profile-username'
 ) as HTMLInputElement | null;
+
 const profileEmailInput = document.querySelector(
   '#profile-email'
 ) as HTMLInputElement | null;
@@ -90,25 +91,6 @@ const create = async (user: {
   return await fetchData<CreateUser>(apiUrl + '/users', options);
 }
 
-registrationForm?.addEventListener('submit', async (evt) => {
-  evt.preventDefault();
-
-  if (!createUsername || !createEmail || !createPassword) {
-    return;
-  }
-
-  const newName = createUsername.value;
-  const newPassword = createPassword.value;
-  const newEmail = createEmail.value;
-
-  const registrationData = {
-    username: newName,
-    password: newPassword,
-    email: newEmail,
-  };
-const registrationResponse = await create(registrationData);
-  alert(registrationResponse.message)
-})
 // function to upload avatar
 const uploadAvatar = async (
   image: File,
@@ -142,9 +124,7 @@ const updateUserData = async (
   return await fetchData<UpdateResult>(apiUrl + '/users', options)
 };
 
-
-// function to add userdata (email, username and avatar image) to the
-// Profile DOM and Edit Profile Form
+// function to add userdata profile DOM and edit profile form
 const addUserDataToDom = (user: User): void => {
   if (
     !usernameTarget ||
@@ -247,12 +227,37 @@ avatarForm?.addEventListener('submit', async (evt) => {
 }
 )
 
+// registration form event listener
+
+registrationForm?.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+
+  if (!createUsername || !createEmail || !createPassword) {
+    return;
+  }
+
+  const newName = createUsername.value;
+  const newPassword = createPassword.value;
+  const newEmail = createEmail.value;
+
+  const registrationData = {
+    username: newName,
+    password: newPassword,
+    email: newEmail,
+  };
+const registrationResponse = await create(registrationData);
+  alert(registrationResponse.message)
+})
 
 // registration modal
+
+// select registration modal elements from the DOM
+
 const registrationDialog = document.querySelector("#registration_dialog") as HTMLDialogElement;
 const registerBtn = document.getElementById("register") as HTMLButtonElement;
 const closeRegistrationBtn = document.getElementById("close_registration") as HTMLButtonElement;
 
+//buttons' event listeners and their functions for opening and closing
 
 const openRegistration = (e: any) => {
   e.preventDefault();
@@ -268,9 +273,14 @@ registerBtn.addEventListener("click", openRegistration);
 closeRegistrationBtn.addEventListener("click", closeRegistration);
 
 // login modal
+
+// select login modal elements from the DOM
+
 const loginDialog = document.getElementById("login_dialog") as HTMLDialogElement;
 const loginBtn = document.getElementById("login") as HTMLButtonElement;
 const closeloginBtn = document.getElementById("close_login") as HTMLButtonElement;
+
+//buttons' event listeners and their functions for opening and closing
 
 const openLogin = (e:any) => {
   e.preventDefault();
@@ -287,9 +297,13 @@ closeloginBtn.addEventListener("click", closeLogin);
 
 // profile modal (with profile info, update profile and upload avatar)
 
+// select profile modal elements from the DOM
+
 const profileDialog = document.getElementById("profile_dialog") as HTMLDialogElement;
 const openprofileBtn = document.getElementById("profile") as HTMLButtonElement;
 const closeprofileBtn = document.getElementById("close_profile") as HTMLButtonElement;
+
+// buttons' event listeners and their functions for opening and closing
 
 const openProfile = (e:any) => {
  e.preventDefault();
@@ -310,9 +324,6 @@ const modal = document.getElementById('info') as HTMLDialogElement;
 if (!modal) {
   throw new Error('Modal not found');
 }
-
-const dayInfo = document.getElementById('day_info') as HTMLDialogElement;
-const weekInfo = document.getElementById('week_info') as HTMLDialogElement;
 
 const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
   Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
@@ -338,15 +349,9 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
           // add restaurant data to modal
           modal.innerHTML = '';
 
-          /* fetch menu
-          const menu = await fetchData<Menu>(
-            apiUrl + `/restaurants/daily/${restaurant._id}/en`
-          );
-          console.log(menu);
+          // info modal
+          // fetch daily and weekly menus and restaurant data
 
-          const menuHtml = restaurantModal(restaurant, menu);
-          modal.insertAdjacentHTML('beforeend', menuHtml);
-*/
           const dayMenu = await fetchData<Menu>(apiUrl + `/restaurants/daily/${restaurant._id}/en`);
           const weekMenu = await fetchData<weeklyMenu>(apiUrl + `/restaurants/weekly/${restaurant._id}/en`);
 
@@ -360,10 +365,14 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
               modal.close()
             })
 
+          // select info modal's elements from the DOM
+
           const day_btn = document.getElementById('dayInfo');
           const week_btn = document.getElementById('weekInfo');
           const day_menu = document.getElementById('day_menu') as HTMLDialogElement;
           const week_menu = document.getElementById('week_menu') as HTMLDialogElement;
+
+          // buttons' event listeners for displaying daily and weekly menu
 
           day_btn?.addEventListener('click', () => {
             const dayMenuHtml = dayModal(dayMenu);
@@ -377,12 +386,6 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
             week_menu.innerHTML = weekMenuHtml;
             week_menu.showModal();
             modal.close()
-          })
-
-          const back_btn = document.getElementById('back');
-          back_btn?.addEventListener('click', () => {
-            day_menu.close();
-            modal.showModal()
           })
 
           day_menu.addEventListener('click', () => {
@@ -406,6 +409,8 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
     console.warn(`ERROR(${err.code}): ${err.message}`);
   };
 
+  // get the closest restaurant based on the user's location
+
   const success = async (pos: GeolocationPosition) => {
     try {
       const crd = pos.coords;
@@ -426,6 +431,7 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
 
 
       // filtering by company
+
       const sodexoBtn = document.querySelector('#sodexo');
       const compassBtn = document.querySelector('#compass');
       const resetBtn = document.querySelector('#reset');
@@ -454,23 +460,25 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
         createTable(restaurants);
       });
 
-  const cityButtons = document.querySelectorAll('#cities button');
+      //filtering by city
 
-  cityButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const city = button.id;
-      const filteredRestaurants = restaurants.filter(
-        (restaurant) => restaurant.city === city
-      );
-      console.log(filteredRestaurants)
-      createTable(filteredRestaurants);
-    });
-  });
+      const cityButtons = document.querySelectorAll('#cities button');
 
-    } catch (error) {
-      modal.innerHTML = errorModal((error as Error).message);
-      modal.showModal();
-    }
+      cityButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const city = button.id;
+          const filteredRestaurants = restaurants.filter(
+            (restaurant) => restaurant.city === city
+          );
+          console.log(filteredRestaurants)
+          createTable(filteredRestaurants);
+        });
+      });
+
+  } catch (error) {
+     modal.innerHTML = errorModal((error as Error).message);
+     modal.showModal();
+  }
   };
 
   navigator.geolocation.getCurrentPosition(success, error, positionOptions);

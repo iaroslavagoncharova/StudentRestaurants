@@ -11,14 +11,15 @@ body {
   margin: 0;
   position: relative;
   transition: background 0.9s ease-in;
-  background-image: url("pexels-chris-economou-6367377.jpg");
+  background-image: url("light_background.jpg");
   background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: cover;
-  width: 100vw;
+  height: 100vh;
 }
 
 body.dark {
-  background-image: url("Vuosaari_at_night\,_Helsinki\,_Finland\,_2021_January.jpg");}
+  background-image: url("dark_background.jpg");}
 
 .checkbox {
   opacity: 0;
@@ -106,7 +107,7 @@ form {
   max-width: 700px;
 }
 
-input {
+form input {
   display: block;
   width: 100%;
   padding: 10px;

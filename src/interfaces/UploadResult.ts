@@ -1,3 +1,5 @@
+// interface for uploading avatar
+
 interface UploadResult {
   message: string;
   data: {

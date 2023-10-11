@@ -1,4 +1,4 @@
-// interface for user based on the result of https://sodexo-webscrape-r73sdlmfxa-lz.a.run.app/#api-User-CheckToken
+// interface for user
 
 interface User {
   _id: string;

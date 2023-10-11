@@ -80,6 +80,7 @@ const restaurantModal = (restaurant: Restaurant) => {
   <button id="dayInfo">Open day menu</button>`
     return html
 }
+
 const errorModal = (message: string) => {
   const html = `
         <h3>Error</h3>

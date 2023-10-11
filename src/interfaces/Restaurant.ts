@@ -1,3 +1,5 @@
+// interface for restaurant info
+
 interface Restaurant {
     _id: string;
     name: string;

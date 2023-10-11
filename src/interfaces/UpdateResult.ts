@@ -1,3 +1,5 @@
+// interface for updating user's data
+
 import {User} from './User';
 
 interface UpdateResult {

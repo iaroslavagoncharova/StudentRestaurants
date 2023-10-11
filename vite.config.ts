@@ -20,7 +20,7 @@ export default defineConfig({
         scope: './',
         start_url: './index.html',
         name: 'restaurant-app',
-        short_name: 'vite-pwa',
+        short_name: 'restaurant',
         icons: [
           {
             src: './icons/icon-192x192.png',
