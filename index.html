@@ -6,7 +6,7 @@
   <link rel="icon" type="image/svg+xml" href="/app-icon.svg" />
   <link href="/main.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Example Vite PWA">
+  <meta name="description" content="Restaurant App">
   <link rel="apple-touch-icon" href="/images/icon-192x192.png" sizes="192x192">
   <meta name="theme-color" content="#ffffff">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,25 +17,23 @@
 </head>
 
 <body>
-  <div class="nav_content">
   <nav class="nav">
     <div id="toggle">
       <input type="checkbox" class="checkbox" id="checkbox">
       <label for="checkbox" class="checkbox-label">
-        <i class="fa-solid fa-moon fa-xl" id="moon"></i>
-        <i class="fa-solid fa-sun fa-xl" id="sun"></i>
+        <i class="fa-solid fa-moon fa-l" id="moon"></i>
+        <i class="fa-solid fa-sun fa-l" id="sun"></i>
         <span class="ball"></span>
       </label>
     </div>
     <ul>
-    <li><i class="fa-solid fa-utensils fa-2xl" style="color: #ffffff;" id="logo"></i></li>
+    <li><i class="fa-solid fa-utensils fa-l" style="color: #ffffff;" id="logo"></i></li>
     <li><h1>Restaurant App</h1></li>
-    <li><i class="fa-solid fa-user-plus fa-2xl" style="color: #ffffff;" id="register"></i></li>
-    <li><i class="fa-solid fa-right-to-bracket fa-2xl" style="color: #ffffff;" id="login"></i></li>
-    <li><i class="fa-solid fa-user fa-2xl" style="color: #ffffff;" id="profile"></i></li>
+    <li><i class="fa-solid fa-user-plus" style="color: #ffffff;" id="register"></i></li>
+    <li><i class="fa-solid fa-right-to-bracket" style="color: #ffffff;" id="login"></i></li>
+    <li><i class="fa-solid fa-user" style="color: #ffffff;" id="profile"></i></li>
   </ul>
 </nav>
-</div>
   <div>
     <dialog id="registration_dialog">
       <h2 id="registration_title">Sign up</h2>
@@ -50,6 +48,7 @@
           <input type="submit" value="Create a profile" class="submit_button">
         </form>
     </dialog>
+    </div>
     <div>
       <dialog id="login_dialog">
         <h2>Log in into your account</h2>
@@ -62,6 +61,7 @@
             <input type="submit" value="Login" class="submit_button" id="loginBtn">
           </form>
       </dialog>
+      </div>
       <div>
         <dialog id="profile_dialog">
           <h2 id="profile_title" class="h2">Profile</h2>
@@ -84,6 +84,7 @@
               <input type="submit" value="Update profile" class="submit_button">
             </form>
         </dialog>
+      </div>
   <div class="content">
   <div class="filter">
     <h2>Reset filters</h2>
@@ -131,6 +132,7 @@
   </dialog>
   <dialog id="day_menu"></dialog>
   <dialog id="week_menu"></dialog>
+</div>
 </div>
 </body>
 </html>

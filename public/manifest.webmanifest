@@ -1,7 +1,7 @@
 {
     "theme_color": "#643843",
     "background_color": "#E7CBCB",
-    "display": "standalone",
+    "display": "fullscreen",
     "scope": "./",
     "start_url": "./index.html",
     "name": "restaurant-app",
