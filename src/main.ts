@@ -482,6 +482,8 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
 
   navigator.geolocation.getCurrentPosition(success, error, positionOptions);
 
+  // saving current checkbox state to localStorage
+
   const checkbox = document.getElementById("checkbox") as HTMLInputElement;
 
   function changeMode(mode: any) {
@@ -500,7 +502,6 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
 
   checkbox.addEventListener("change", () => {
   document.body.classList.toggle("dark")
-
   const newMode = document.body.classList.contains('dark') ? 'dark' : 'light';
   localStorage.setItem('mode', newMode);
 }

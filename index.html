@@ -13,10 +13,9 @@
   <title>Restaurant App</title>
   <script src="src/main.ts" type="module"></script>
   <script src="https://kit.fontawesome.com/438aeadf51.js" crossorigin="anonymous"></script>
-
 </head>
-
 <body>
+  <div class="main">
   <nav class="nav">
     <div id="toggle">
       <input type="checkbox" class="checkbox" id="checkbox">
@@ -87,13 +86,17 @@
       </div>
   <div class="content">
   <div class="filter">
+    <div class="show_all">
     <h2>Reset filters</h2>
     <button id="reset">Show all</button>
+  </div>
+  <div class="companies">
     <h2>Filter by company</h2>
     <button id="sodexo">Sodexo</button>
     <button id="compass">Compass Group</button>
-    <h2>Filter by city</h2>
+  </div>
     <div id="cities">
+      <h2>Filter by city</h2>
     <button id="Helsinki">Helsinki</button>
     <button id="Hämeenlinna">Hämeenlinna</button>
     <button id="Tampere">Tampere</button>
@@ -119,7 +122,7 @@
   </div>
   </div>
   <div class="restaurantList">
-  <table>
+  <table id="restaurants">
     <tr>
       <th>Name</th>
       <th>Address</th>
@@ -132,6 +135,7 @@
   </dialog>
   <dialog id="day_menu"></dialog>
   <dialog id="week_menu"></dialog>
+</div>
 </div>
 </div>
 </body>
