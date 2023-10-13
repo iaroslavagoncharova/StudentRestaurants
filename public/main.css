@@ -249,8 +249,8 @@ td {
 
 .checkbox-label {
   background-color: #99627A;
-  width: 67px;
-  height: 32px;
+  width: 52px;
+  height: 28px;
   border-radius: 50px;
   position: relative;
   padding: 5px;
@@ -262,14 +262,14 @@ td {
   left: 10px;
 }
 
-#sun {color: #fffbff;}
+#sun {color: #fffbff; font-size: 20px;}
 
-#moon {color: #04030f;}
+#moon {color: #04030f; font-size: 20px;}
 
 .checkbox-label .ball {
   background-color: #fff;
-  width: 30px;
-  height: 30px;
+  width: 23px;
+  height: 23px;
   position: absolute;
   left: 2px;
   border-radius: 50%;
@@ -277,7 +277,7 @@ td {
 }
 
 .checkbox:checked + .checkbox-label .ball {
-  transform: translateX(34px);
+  transform: translateX(23px);
 }
 
 /*dark mode rules*/

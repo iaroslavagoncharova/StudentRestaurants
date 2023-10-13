@@ -278,7 +278,7 @@ closeRegistrationBtn.addEventListener("click", closeRegistration);
 
 const loginDialog = document.getElementById("login_dialog") as HTMLDialogElement;
 const loginBtn = document.getElementById("login") as HTMLButtonElement;
-const closeloginBtn = document.getElementById("close_login") as HTMLButtonElement;
+const closeLoginBtn = document.getElementById("close_login") as HTMLButtonElement;
 
 //buttons' event listeners and their functions for opening and closing
 
@@ -293,15 +293,15 @@ const closeLogin = (e:any) => {
 };
 
 loginBtn.addEventListener("click", openLogin);
-closeloginBtn.addEventListener("click", closeLogin);
+closeLoginBtn.addEventListener("click", closeLogin);
 
 // profile modal (with profile info, update profile and upload avatar)
 
 // select profile modal elements from the DOM
 
 const profileDialog = document.getElementById("profile_dialog") as HTMLDialogElement;
-const openprofileBtn = document.getElementById("profile") as HTMLButtonElement;
-const closeprofileBtn = document.getElementById("close_profile") as HTMLButtonElement;
+const openProfileBtn = document.getElementById("profile") as HTMLButtonElement;
+const closeProfileBtn = document.getElementById("close_profile") as HTMLButtonElement;
 
 // buttons' event listeners and their functions for opening and closing
 
@@ -315,8 +315,8 @@ const closeProfile = (e:any) => {
   profileDialog.close();
 };
 
-openprofileBtn.addEventListener("click", openProfile);
-closeprofileBtn.addEventListener("click", closeProfile);
+openProfileBtn.addEventListener("click", openProfile);
+closeProfileBtn.addEventListener("click", closeProfile);
 
 // creating restaurant table
 
@@ -352,8 +352,8 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
           // info modal
           // fetch daily and weekly menus and restaurant data
 
-          const dayMenu = await fetchData<Menu>(apiUrl + `/restaurants/daily/${restaurant._id}/en`);
-          const weekMenu = await fetchData<weeklyMenu>(apiUrl + `/restaurants/weekly/${restaurant._id}/en`);
+          const getDayMenu = await fetchData<Menu>(apiUrl + `/restaurants/daily/${restaurant._id}/en`);
+          const getWeekMenu = await fetchData<weeklyMenu>(apiUrl + `/restaurants/weekly/${restaurant._id}/en`);
 
           const info = await fetchData<Restaurant>(apiUrl + `/restaurants/${restaurant._id}`)
           const infoModal = restaurantModal(info);
@@ -367,34 +367,34 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
 
           // select info modal's elements from the DOM
 
-          const day_btn = document.getElementById('dayInfo');
-          const week_btn = document.getElementById('weekInfo');
-          const day_menu = document.getElementById('day_menu') as HTMLDialogElement;
-          const week_menu = document.getElementById('week_menu') as HTMLDialogElement;
+          const dayBtn = document.getElementById('dayInfo');
+          const weekBtn = document.getElementById('weekInfo');
+          const dayMenu = document.getElementById('day_menu') as HTMLDialogElement;
+          const weekMenu = document.getElementById('week_menu') as HTMLDialogElement;
 
           // buttons' event listeners for displaying daily and weekly menu
 
-          day_btn?.addEventListener('click', () => {
-            const dayMenuHtml = dayModal(dayMenu);
-            day_menu.innerHTML = dayMenuHtml;
-            day_menu.showModal()
+          dayBtn?.addEventListener('click', () => {
+            const dayMenuHtml = dayModal(getDayMenu);
+            dayMenu.innerHTML = dayMenuHtml;
+            dayMenu.showModal()
             modal.close()
           })
 
-          week_btn?.addEventListener('click', () => {
-            const weekMenuHtml = weekModal(weekMenu);
-            week_menu.innerHTML = weekMenuHtml;
-            week_menu.showModal();
+          weekBtn?.addEventListener('click', () => {
+            const weekMenuHtml = weekModal(getWeekMenu);
+            weekMenu.innerHTML = weekMenuHtml;
+            weekMenu.showModal();
             modal.close()
           })
 
-          day_menu.addEventListener('click', () => {
-            day_menu.close();
+          dayMenu.addEventListener('click', () => {
+            dayMenu.close();
             modal.showModal()
           })
 
-          week_menu.addEventListener('click', () => {
-            week_menu.close();
+          weekMenu.addEventListener('click', () => {
+            weekMenu.close();
             modal.showModal();
           })
         } catch (error) {
@@ -470,7 +470,6 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
           const filteredRestaurants = restaurants.filter(
             (restaurant) => restaurant.city === city
           );
-          console.log(filteredRestaurants)
           createTable(filteredRestaurants);
         });
       });
@@ -483,8 +482,27 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
 
   navigator.geolocation.getCurrentPosition(success, error, positionOptions);
 
-  const checkbox = document.getElementById("checkbox") as HTMLElement;
+  const checkbox = document.getElementById("checkbox") as HTMLInputElement;
+
+  function changeMode(mode: any) {
+    if (mode === 'dark') {
+      document.body.classList.add('dark');
+      checkbox.checked = true;
+    } else {
+      document.body.classList.remove('dark');
+      checkbox.checked = false;
+    }
+  }
+
+  const currentMode = localStorage.getItem('mode');
+
+  changeMode(currentMode || 'light');
+
   checkbox.addEventListener("change", () => {
   document.body.classList.toggle("dark")
-})
+
+  const newMode = document.body.classList.contains('dark') ? 'dark' : 'light';
+  localStorage.setItem('mode', newMode);
+}
+)
 
