@@ -26,4 +26,5 @@ interface CreateUser {
   message: string;
 }
 
+
 export type {User, LoginUser, UpdateUser, CreateUser};

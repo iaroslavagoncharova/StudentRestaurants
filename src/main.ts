@@ -8,6 +8,7 @@ import {registerSW} from 'virtual:pwa-register';
 import { errorModal, weekModal, restaurantRow, dayModal, restaurantModal } from './components';
 import { Restaurant } from './interfaces/Restaurant';
 import { Menu, weeklyMenu } from './interfaces/Menu';
+import { addFavoriteRestaurant } from './interfaces/FavRestaurant';
 
 // PWA code
 console.log(pwaInfo)
@@ -226,7 +227,50 @@ avatarForm?.addEventListener('submit', async (evt) => {
   alert(avatarData.message)
 }
 )
+// function to add to favorites
+const addRestaurant = async (
+  name: string,
+  token: string,
+) : Promise<addFavoriteRestaurant> => {
+  const options: RequestInit = {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(name)
+  }
+  return await fetchData(apiUrl + '/users/favouriteRestaurant', options);
+  };
+;
+// add restaurant to favorites
 
+
+
+/*document.addEventListener('click', async (event) => {
+  const favoriteStar = event.target as HTMLElement;
+  if (favoriteStar.classList.contains('favorite-star')) {
+    // Get the restaurant ID from the data attribute
+    const restaurantId = favoriteStar.getAttribute('data-restaurant-id');
+
+    // Get the user ID from your user data or from localStorage
+    const userId = 'user123'; // Replace with actual user ID retrieval
+
+    // Make a request to your API to update the user's favorite restaurant
+    try {
+      const response = await addFavoriteRestaurant(userId, restaurantId);
+      if (response.success) {
+        // Update the UI or provide feedback to the user
+        alert('Restaurant added to favorites');
+      } else {
+        alert('Failed to add restaurant to favorites');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred');
+    }
+  }
+}); */
 // registration form event listener
 
 registrationForm?.addEventListener('submit', async (evt) => {
