@@ -25,17 +25,17 @@ const weekModal = (weeklymenu: weeklyMenu) => {
       <table>
       <h3>${date}</h3>
       <tr>
-          <th id="course_label">Course</th>
-          <th id="diet_label">Diet</th>
-          <th id="price_label">Price</th>`;
+          <th class="course_label">Course</th>
+          <th class="diet_label">Diet</th>
+          <th class="price_label">Price</th>`;
       menu.courses.forEach((course) => {
         const {name, diets, price} = course;
         html += ` <table>
         </tr>
               <tr>
-                <td id="menu_name">${name}</td>
-                <td id="diet_info">${diets ?? ' - '}</td>
-                <td id="price">${price ?? ' - '}</td>
+                <td class="menu_name">${name}</td>
+                <td class="diet_info">${diets ?? ' - '}</td>
+                <td class="price">${price ?? ' - '}</td>
               </tr>
               `;})
         })
@@ -49,17 +49,17 @@ const dayModal = (menu: Menu) => {
   <h2>Day Menu</h2> <p>Click anywhere to go back</p>
   <table>
       <tr>
-        <th>Course</th>
-        <th>Diet</th>
-        <th>Price</th>
+        <th class="course_label">Course</th>
+        <th class="diet_label">Diet</th>
+        <th class="price_label">Price</th>
       </tr>`
   menu.courses.forEach((course) => {
     const {name, diets, price} = course;
    html += `
           <tr>
-            <td>${name}</td>
-            <td>${diets ?? ' - '}</td>
-            <td>${price ?? ' - '}</td>
+            <td class="menu_name">${name}</td>
+            <td class="diet_info">${diets ?? ' - '}</td>
+            <td class="price">${price ?? ' - '}</td>
           </tr>
           `;
   });

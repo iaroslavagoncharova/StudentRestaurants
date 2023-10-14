@@ -199,17 +199,18 @@ td {
   overflow: hidden;
   }
 
-#menu_name, #course_label {
+
+.menu_name, .course_label {
   width: 200px;
   padding: 10px;
 }
 
-#diet_info, #diet_label {
-  width: 100px;
+.diet_info,.diet_label {
+  width: 200px;
 }
 
-#price, #price_label {
-  width: 200px;
+.price, .price_label {
+ width: 200px;
 }
 
 .highlight {
@@ -353,7 +354,7 @@ body.dark #close {
   color: #E7CBCB;
 }
 
-@media only screen and (min-width: 320px) and (max-width: 375px) {
+@media only screen and (min-width: 280px) and (max-width: 375px) {
   #logo, .nav li h1 {
     display: none;
   }
@@ -366,9 +367,8 @@ body.dark #close {
     margin: 0;
   }
   .content {
-    max-width: 375px;
-    grid-template-columns: 300px;
-    grid-template-rows: 200px 400px;
+    grid-template-columns: minmax(250px, 350px);
+    grid-template-rows: 200px 500px;
   }
   .filter {
     grid-row: 1 / 2;
@@ -378,32 +378,23 @@ body.dark #close {
   }
 
   form {
-    max-width: 320px;
+    max-width: 250px;
     text-align: center;
     padding: 0;
     margin: 0;
   }
   dialog {
-    margin: auto 0;
-    max-height: 500px;
-    overflow: auto;
-    padding: 0;
-    max-width: 200px;
+    max-width: 290px;
+    min-width: 200px;
+    text-align: center;
   }
-  dialog h2, p {
-    max-width: 200px;
-  }
-  form {
-    max-width: 200px;
-  }
-  form input {
-    max-width: 200px;
-  }
+
   .form_button, .submit_button {
     max-width: 200px;
     margin: 0;
-    font-size: 10px;
+    font-size: 12px;
   }
+
   .filter {
     margin: 0;
     padding: 10px;
@@ -418,12 +409,12 @@ body.dark #close {
   }
   #restaurants tr {
     display: grid;
-    grid-template-columns: minmax(100px, 250px);
+    grid-template-columns: minmax(100px, 300px);
     border: 1px solid #99627A;
     border-radius: 20px;
     margin: 5px;
     overflow: auto;
-    max-width: 250px;
+    max-width: 270px;
   }
 
   .restaurantList {
@@ -433,11 +424,42 @@ body.dark #close {
     border: none;
   }
 
+  body.dark #restaurants tr {
+    border: 1px solid #E7CBCB;
+  }
+
+  .menu_name, .course_label {
+    max-width: 80px;
+  }
+
+  .diet_info, .diet_label {
+    max-width: 80px;
+  }
+
+  .price, .price_label {
+   max-width: 80px;
+  }
+
 }
-@media only screen and (min-width: 425px) and (max-width: 550px) {
+
+@media only screen and (min-width: 800px) {
   .content {
-    grid-template-columns: minmax(400px, 500px);
+    grid-template-columns: minmax(150px, 450px) minmax(300px, 900px);
+    grid-template-rows: minmax(400px, 550px);
+    margin: auto;
+  }
+  .filter {
+    overflow: auto;
+  }
+  #dayInfo, #weekInfo {
+    max-width: 600px;
+  }
+}
+@media only screen and (min-width: 375px) and (max-width: 800px) {
+  .content {
+    grid-template-columns: minmax(350px, 600px);
     grid-template-rows: repeat(2, minmax(100px, 400px));
+    margin: auto;
   }
   .restaurantList {
     grid-row: 2 /3;
@@ -460,8 +482,10 @@ body.dark #close {
   }
   #cities {
     grid-column: 1 / 3;
+    margin-top: 10px;
   }
   dialog {
+    min-width: 300px;
     max-height: 500px;
     max-width: 500px;
   }
@@ -471,6 +495,9 @@ body.dark #close {
     border: 1px solid #99627A;
     border-radius: 20px;
     margin: 10px;
+  }
+  body.dark #restaurants tr {
+    border: 1px solid #E7CBCB;
   }
   #restaurants td {
     border: none;

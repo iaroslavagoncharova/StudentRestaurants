@@ -246,7 +246,7 @@ registrationForm?.addEventListener('submit', async (evt) => {
     email: newEmail,
   };
 const registrationResponse = await create(registrationData);
-  alert(registrationResponse.message)
+  alert(registrationResponse.message);
 })
 
 // registration modal
