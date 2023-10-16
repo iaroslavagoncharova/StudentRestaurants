@@ -3,7 +3,7 @@
 interface User {
   _id: string;
   username: string;
-  favouriteRestaurant: string;
+  favouriteRestaurant?: string;
   avatar: string;
   role: string;
   email: string;
@@ -18,6 +18,7 @@ interface LoginUser {
 interface UpdateUser {
   username: string;
   email: string;
+  favouriteRestaurant?: string;
 }
 
 interface CreateUser {

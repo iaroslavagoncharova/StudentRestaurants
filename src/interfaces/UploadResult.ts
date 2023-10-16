@@ -8,4 +8,12 @@ interface UploadResult {
   };
 }
 
-export type {UploadResult};
+interface uploadFav {
+  message: string;
+  data: {
+    favouriteRestaurant: string;
+    _id: string;
+  };
+}
+
+export type {UploadResult, uploadFav};

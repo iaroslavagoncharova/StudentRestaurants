@@ -71,7 +71,7 @@ const restaurantModal = (restaurant: Restaurant) => {
   const {_id, name, address, city, postalCode, phone, company} = restaurant;
   let html = `
   <i class="fa-solid fa-circle-xmark fa-2xl" id="close"></i>
-  <i class="fa-regular fa-star fa-2xl" id="${_id}" style="color: #643843;"></i>
+  <i class="fa-regular fa-star fa-2xl"  restaurant-id="${_id}" id="fav-btn" style="color: #643843;"></i>
   <h3>${name}</h3>
     <p>${company}</p>
     <p>${address} ${postalCode} ${city}</p>

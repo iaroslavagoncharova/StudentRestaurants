@@ -503,8 +503,10 @@ body.dark #close {
     border: none;
   }
 }
-
-
+.color {
+  background-color: #C88EA7;
+  font-weight: bold;
+}
 
 
 

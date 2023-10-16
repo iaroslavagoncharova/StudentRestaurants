@@ -1,7 +1,7 @@
 import {pwaInfo} from 'virtual:pwa-info';
 import {fetchData} from './functions';
 import {UpdateResult} from './interfaces/UpdateResult';
-import {UploadResult} from './interfaces/UploadResult';
+import {UploadResult, uploadFav} from './interfaces/UploadResult';
 import {LoginUser, User, CreateUser, UpdateUser} from './interfaces/User';
 import {apiUrl, uploadUrl, positionOptions} from './variables';
 import {registerSW} from 'virtual:pwa-register';
@@ -9,6 +9,7 @@ import { errorModal, weekModal, restaurantRow, dayModal, restaurantModal } from 
 import { Restaurant } from './interfaces/Restaurant';
 import { Menu, weeklyMenu } from './interfaces/Menu';
 import { addFavoriteRestaurant } from './interfaces/FavRestaurant';
+
 
 // PWA code
 console.log(pwaInfo)
@@ -53,6 +54,7 @@ const avatarInput = document.querySelector('#avatar') as HTMLInputElement | null
 const usernameTarget = document.querySelector('#username-target');
 const emailTarget = document.querySelector('#email-target');
 const avatarTarget = document.querySelector('#avatar-target');
+const favTarget = document.querySelector('#fav-target');
 
 // select registration elements
 
@@ -109,6 +111,23 @@ const uploadAvatar = async (
   return await fetchData(apiUrl + '/users/avatar', options);
 };
 
+// function to add a favorite restaurant
+
+const addRestaurant = async (
+  favouriteRestaurant: string,
+  token: string,
+) : Promise<uploadFav> => {
+  const options: RequestInit = {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({favouriteRestaurant}),
+  };
+  return await fetchData(apiUrl + '/users', options);
+}
+
 // function to update user data
 const updateUserData = async (
   user: UpdateUser,
@@ -132,7 +151,8 @@ const addUserDataToDom = (user: User): void => {
     !emailTarget ||
     !avatarTarget ||
     !profileEmailInput ||
-    !profileUsernameInput
+    !profileUsernameInput ||
+    !favTarget
   ) {
     return;
   }
@@ -141,6 +161,7 @@ const addUserDataToDom = (user: User): void => {
   (avatarTarget as HTMLImageElement).src = uploadUrl + user.avatar;
   profileEmailInput.value = user.email;
   profileUsernameInput.value = user.username;
+  favTarget.innerHTML = user.favouriteRestaurant || 'No favourite restaurant';
 };
 
 // function to get userdata from API using token
@@ -189,13 +210,14 @@ loginForm?.addEventListener('submit', async (evt) => {
 
 profileForm?.addEventListener('submit', async (evt) => {
   evt.preventDefault();
-  if (!profileUsernameInput || !profileEmailInput) {
+  if (!profileUsernameInput || !profileEmailInput || !favTarget) {
     return;
   }
 
   const user = {
     username: profileUsernameInput.value,
     email: profileEmailInput.value,
+    favouriteRestaurant: favTarget.innerHTML,
   }
 
   const token = localStorage.getItem('token');
@@ -227,50 +249,7 @@ avatarForm?.addEventListener('submit', async (evt) => {
   alert(avatarData.message)
 }
 )
-// function to add to favorites
-const addRestaurant = async (
-  name: string,
-  token: string,
-) : Promise<addFavoriteRestaurant> => {
-  const options: RequestInit = {
-    method: 'PUT',
-    headers: {
-      Authorization: 'Bearer ' + token,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(name)
-  }
-  return await fetchData(apiUrl + '/users/favouriteRestaurant', options);
-  };
-;
-// add restaurant to favorites
 
-
-
-/*document.addEventListener('click', async (event) => {
-  const favoriteStar = event.target as HTMLElement;
-  if (favoriteStar.classList.contains('favorite-star')) {
-    // Get the restaurant ID from the data attribute
-    const restaurantId = favoriteStar.getAttribute('data-restaurant-id');
-
-    // Get the user ID from your user data or from localStorage
-    const userId = 'user123'; // Replace with actual user ID retrieval
-
-    // Make a request to your API to update the user's favorite restaurant
-    try {
-      const response = await addFavoriteRestaurant(userId, restaurantId);
-      if (response.success) {
-        // Update the UI or provide feedback to the user
-        alert('Restaurant added to favorites');
-      } else {
-        alert('Failed to add restaurant to favorites');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred');
-    }
-  }
-}); */
 // registration form event listener
 
 registrationForm?.addEventListener('submit', async (evt) => {
@@ -371,16 +350,22 @@ if (!modal) {
 
 const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
   Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
-
+  let currentFav = '';
   const createTable = (restaurants: Restaurant[]) => {
     const table = document.querySelector('table');
     if (!table) {
       throw new Error('Table not found');
     }
     table.innerHTML = '';
-    restaurants.forEach((restaurant) => {
+    let firstRow = false;
+    restaurants.forEach((restaurant, index) => {
       const tr = restaurantRow(restaurant);
       table.appendChild(tr);
+      if (!firstRow && index === 0) {
+        tr.classList.add('color');
+        firstRow = true;
+        currentFav = restaurant._id;
+    }
       tr.addEventListener('click', async () => {
         try {
           // remove all highlights
@@ -392,7 +377,6 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
           tr.classList.add('highlight');
           // add restaurant data to modal
           modal.innerHTML = '';
-
           // info modal
           // fetch daily and weekly menus and restaurant data
 
@@ -408,6 +392,39 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
           closeIcon?.addEventListener ('click', () => {
               modal.close()
             })
+
+            const favBtn = document.getElementById('fav-btn');
+            if (favBtn) {
+              const restaurantId = favBtn.getAttribute('restaurant-id');
+              if (restaurantId === currentFav) {
+                favBtn.style.color = 'red';
+              }
+            }
+
+            favBtn?.addEventListener('click', async (evt) => {
+              evt.preventDefault();
+              if (!favTarget) {
+                return;
+              }
+              const restaurantId = favBtn.getAttribute('restaurant-id');
+
+              if (!restaurantId) {
+                console.error('Restaurant ID not found.');
+                return;
+              }
+
+              const token = localStorage.getItem('token');
+              if (!token) {
+                return;
+              }
+              const favData = await addRestaurant(restaurantId, token);
+              console.log(favData);
+              console.log(restaurantId);
+              checkToken();
+              alert(favData.message);
+              currentFav = restaurantId;
+              favBtn.style.color = 'red';
+              })
 
           // select info modal's elements from the DOM
 

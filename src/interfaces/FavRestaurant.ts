@@ -1,9 +1,12 @@
+import { User } from "./User";
+
 interface addFavoriteRestaurant {
     message: string;
     data: {
-        name: string;
-        _id: string;
-    };
+        favouriteRestaurant: string;
+        user: User;
+    }
 }
 
 export type {addFavoriteRestaurant}
+
