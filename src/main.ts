@@ -8,7 +8,6 @@ import {registerSW} from 'virtual:pwa-register';
 import { errorModal, weekModal, restaurantRow, dayModal, restaurantModal } from './components';
 import { Restaurant } from './interfaces/Restaurant';
 import { Menu, weeklyMenu } from './interfaces/Menu';
-import { addFavoriteRestaurant } from './interfaces/FavRestaurant';
 
 
 // PWA code
@@ -30,7 +29,7 @@ const updateSW = registerSW({
 });
 
 // select forms from the DOM
-const loginForm = document.querySelector('#login-form');
+const loginForm = document.querySelector('#login-form') as HTMLFormElement;
 const profileForm = document.querySelector('#profile-form');
 const avatarForm = document.querySelector('#avatar-form');
 const registrationForm = document.querySelector('#create-form');
@@ -95,6 +94,7 @@ const create = async (user: {
 }
 
 // function to upload avatar
+
 const uploadAvatar = async (
   image: File,
   token: string,
@@ -129,6 +129,7 @@ const addRestaurant = async (
 }
 
 // function to update user data
+
 const updateUserData = async (
   user: UpdateUser,
   token: string,
@@ -144,27 +145,54 @@ const updateUserData = async (
   return await fetchData<UpdateResult>(apiUrl + '/users', options)
 };
 
+// function to get restaurant name to display in the profile
+
+const getRestaurantName = async (restaurantId: string, token: string) => {
+  const options: RequestInit = {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  };
+  const restaurantData = await fetchData<Restaurant>(apiUrl + '/restaurants/' + restaurantId, options);
+  return restaurantData.name;
+};
+
 // function to add userdata profile DOM and edit profile form
-const addUserDataToDom = (user: User): void => {
+
+const addUserDataToDom = async (user: User): Promise<void> => {
   if (
     !usernameTarget ||
     !emailTarget ||
     !avatarTarget ||
     !profileEmailInput ||
-    !profileUsernameInput ||
-    !favTarget
+    !profileUsernameInput || !favTarget
   ) {
+    alert('DOM element not found');
     return;
   }
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return;
+  }
+
   usernameTarget.innerHTML = user.username;
   emailTarget.innerHTML = user.email;
   (avatarTarget as HTMLImageElement).src = uploadUrl + user.avatar;
   profileEmailInput.value = user.email;
   profileUsernameInput.value = user.username;
-  favTarget.innerHTML = user.favouriteRestaurant || 'No favourite restaurant';
+  if (user.favouriteRestaurant) {
+    try {
+      const name = await getRestaurantName(user.favouriteRestaurant, token);
+      favTarget.innerHTML = name;
+    } catch (error) {
+      console.error(error);
+      favTarget.innerHTML = 'not chosen yet';
+    }
+  }
 };
 
 // function to get userdata from API using token
+
 const getUserData = async (token: string): Promise<User> => {
   const options: RequestInit = {
     headers: {
@@ -176,6 +204,7 @@ const getUserData = async (token: string): Promise<User> => {
 
 // function to check local storage for token and if it exists fetch
 // userdata with getUserData then update the DOM with addUserDataToDom
+
 const checkToken = async (): Promise<void> => {
   const token = localStorage.getItem('token');
   if (!token) {
@@ -186,6 +215,7 @@ const checkToken = async (): Promise<void> => {
 };
 
 // call checkToken on page load to check if token exists and update the DOM
+
 checkToken();
 
 // login form event listener
@@ -200,24 +230,24 @@ loginForm?.addEventListener('submit', async (evt) => {
     password: passwordInput.value,
   };
   const loginData = await login(user);
-  console.log(loginData);
   alert(loginData.message);
   localStorage.setItem('token', loginData.token);
   addUserDataToDom(loginData.data);
+  loginDialog.close();
+  loginForm.reset();
 });
 
 // profile form event listener
 
 profileForm?.addEventListener('submit', async (evt) => {
   evt.preventDefault();
-  if (!profileUsernameInput || !profileEmailInput || !favTarget) {
+  if (!profileUsernameInput || !profileEmailInput) {
+    alert('Please change either username or email');
     return;
   }
-
-  const user = {
+ const user = {
     username: profileUsernameInput.value,
     email: profileEmailInput.value,
-    favouriteRestaurant: favTarget.innerHTML,
   }
 
   const token = localStorage.getItem('token');
@@ -236,6 +266,7 @@ profileForm?.addEventListener('submit', async (evt) => {
 avatarForm?.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   if (!avatarInput?.files) {
+    alert('Please select a file');
     return;
  }
   const image = avatarInput.files[0];
@@ -268,8 +299,9 @@ registrationForm?.addEventListener('submit', async (evt) => {
     password: newPassword,
     email: newEmail,
   };
-const registrationResponse = await create(registrationData);
+  const registrationResponse = await create(registrationData);
   alert(registrationResponse.message);
+  registrationDialog.close();
 })
 
 // registration modal
@@ -284,7 +316,12 @@ const closeRegistrationBtn = document.getElementById("close_registration") as HT
 
 const openRegistration = (e: any) => {
   e.preventDefault();
-  registrationDialog.showModal();
+  const token = localStorage.getItem('token');
+  if (!token) {
+    registrationDialog.showModal();
+  } else {
+    alert('You are already logged in.');
+  }
 };
 
 const closeRegistration = (e: any) => {
@@ -307,7 +344,12 @@ const closeLoginBtn = document.getElementById("close_login") as HTMLButtonElemen
 
 const openLogin = (e:any) => {
   e.preventDefault();
-  loginDialog.showModal();
+  const token = localStorage.getItem('token');
+  if (!token) {
+    loginDialog.showModal();
+  } else {
+    alert('You are already logged in.');
+  }
 };
 
 const closeLogin = (e:any) => {
@@ -318,19 +360,25 @@ const closeLogin = (e:any) => {
 loginBtn.addEventListener("click", openLogin);
 closeLoginBtn.addEventListener("click", closeLogin);
 
-// profile modal (with profile info, update profile and upload avatar)
+// profile modal (with profile info, update profile, upload avatar and log out)
 
 // select profile modal elements from the DOM
 
 const profileDialog = document.getElementById("profile_dialog") as HTMLDialogElement;
 const openProfileBtn = document.getElementById("profile") as HTMLButtonElement;
 const closeProfileBtn = document.getElementById("close_profile") as HTMLButtonElement;
+const logoutBtn = document.getElementById('logout') as HTMLButtonElement;
 
 // buttons' event listeners and their functions for opening and closing
 
 const openProfile = (e:any) => {
  e.preventDefault();
-  profileDialog.showModal();
+ const token = localStorage.getItem('token');
+  if (token) {
+    profileDialog.showModal();
+  } else {
+    alert('Please log in to access the profile.');
+  }
 };
 
 const closeProfile = (e:any) => {
@@ -340,6 +388,15 @@ const closeProfile = (e:any) => {
 
 openProfileBtn.addEventListener("click", openProfile);
 closeProfileBtn.addEventListener("click", closeProfile);
+
+// logging out
+
+logoutBtn?.addEventListener('click', () => {
+  localStorage.removeItem('token');
+  profileDialog.close();
+  alert('You are logged out');
+  checkToken();
+});
 
 // creating restaurant table
 
@@ -364,7 +421,6 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
       if (!firstRow && index === 0) {
         tr.classList.add('color');
         firstRow = true;
-        currentFav = restaurant._id;
     }
       tr.addEventListener('click', async () => {
         try {
@@ -383,15 +439,21 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
           const getDayMenu = await fetchData<Menu>(apiUrl + `/restaurants/daily/${restaurant._id}/en`);
           const getWeekMenu = await fetchData<weeklyMenu>(apiUrl + `/restaurants/weekly/${restaurant._id}/en`);
 
+          // fetch info about the restaurant
+
           const info = await fetchData<Restaurant>(apiUrl + `/restaurants/${restaurant._id}`)
           const infoModal = restaurantModal(info);
           modal.insertAdjacentHTML('beforeend', infoModal);
           modal.showModal()
 
+          // close the modal
+
           const closeIcon = document.getElementById('close');
           closeIcon?.addEventListener ('click', () => {
               modal.close()
             })
+
+          // add the restaurant to favorites and highlight the closest restaurant
 
             const favBtn = document.getElementById('fav-btn');
             if (favBtn) {
@@ -407,20 +469,26 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
                 return;
               }
               const restaurantId = favBtn.getAttribute('restaurant-id');
+              const restaurantName = favBtn.getAttribute('name-id');
 
-              if (!restaurantId) {
-                console.error('Restaurant ID not found.');
+              if (!restaurantId || !restaurantName) {
+                console.error('Restaurant ID or name not found.');
                 return;
               }
 
               const token = localStorage.getItem('token');
               if (!token) {
+                alert('Please log in to add a favorite restaurant');
                 return;
               }
               const favData = await addRestaurant(restaurantId, token);
               console.log(favData);
               console.log(restaurantId);
+              console.log(restaurantName);
+              favTarget.innerHTML = '';
+              favTarget.innerHTML = restaurantName;
               checkToken();
+              localStorage.setItem('favoriteRestaurant', JSON.stringify({ id: restaurantId, name: restaurantName }));
               alert(favData.message);
               currentFav = restaurantId;
               favBtn.style.color = 'red';

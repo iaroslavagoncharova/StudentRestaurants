@@ -14,13 +14,13 @@ export default defineConfig({
         sourcemap: true,
       },
       manifest: {
-        theme_color: '#f69435',
-        background_color: '#f69435',
+        theme_color: '#643843',
+        background_color: '#C88EA7',
         display: 'standalone',
         scope: './',
         start_url: './index.html',
         name: 'restaurant-app',
-        short_name: 'restaurant',
+        short_name: 'restaurants',
         icons: [
           {
             src: './images/icon-192x192.png',

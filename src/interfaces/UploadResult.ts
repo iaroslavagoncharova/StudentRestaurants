@@ -7,6 +7,7 @@ interface UploadResult {
     _id: string;
   };
 }
+//interface for uploading favourite restaurant
 
 interface uploadFav {
   message: string;

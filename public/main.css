@@ -144,7 +144,10 @@ form input {
   background-color: #643843;
   color: #fffbff;
 }
-
+#logout {
+  margin: 20px 0 0 20px;
+  color: #643843;
+}
 .submit_button {
   background-color: firebrick;
   color: #fffbff;
@@ -216,6 +219,11 @@ td {
 .highlight {
   font-weight: bold;
   background-color: #E7CBCB;
+}
+
+.color {
+  background-color: #C88EA7;
+  font-weight: bold;
 }
 
 .restaurantList {
@@ -352,6 +360,10 @@ body.dark #dayInfo {
 
 body.dark #close {
   color: #E7CBCB;
+}
+
+body.dark #logout {
+  color: #fffbff;
 }
 
 @media only screen and (min-width: 280px) and (max-width: 375px) {
@@ -503,10 +515,7 @@ body.dark #close {
     border: none;
   }
 }
-.color {
-  background-color: #C88EA7;
-  font-weight: bold;
-}
+
 
 
 
