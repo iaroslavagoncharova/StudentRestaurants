@@ -1,3 +1,9 @@
 # Student restaurants app project for second year of studies in Metropolia
-Users can register, log in, update their personal information, add avatars, log out, choose a favorite restaurant, see information about a restaurant, daily and weekly menus, 
-filter restaurants by city or company, toggle between dark and light modes, see the closest restaurant based on their location, and download the app as PWA to their phones with the same functionality.
+- A list of Finnish student restaurants is displayed
+- Users can register, log in, update their personal information (username and email), add an avatar, choose a favorite restaurant, log out
+- Restaurants can be filtered by city or company
+- Closest to the user restaurant (based on their location) is highlighted
+- All information (name, address, phone number, and company) is displayed in a modal after clicking a restaurant
+- Users can choose if they want to see a daily or a weekly menu and open the preferred menu from the information modal
+- Dark/light modes
+- PWA available
